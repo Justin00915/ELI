@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Shopping List</h3>
+
+<nav><a href="/explorer/index.html#uri=/">API Explorer</a></nav>
+<p>
+<div th:each="item : ${shoppingList}">
+<span th:text="${item.supply + '/' + item.demand + ' ' + item.name}" />
+</div>
+</p>
+
+<footer>
+<form method="post" th:object="${shoppingListItem}">
+	<input type="text" th:field="*{name}">
+	<input type="number" th:field="*{demand}">
+	<input type="submit">
+</form>
+<footer>	
+</body>
+</html>
