@@ -1,20 +1,129 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Shopping List</title>
+	<title>ELI</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
 
-<h1>Shopping List</h1>
+<body style="font-family: Arial, Helvetica, sans-serif;">
 
-<ul>
-    <li th:each="item : ${items}" th:text="${item}"></li>
-</ul>
+	<h1>ELI (Einkaufslisten Interface)</h1>
 
-<form action="/add" method="post">
-    <input type="text" name="item" placeholder="Add item..." required>
-    <button type="submit">Add</button>
-</form>
+	<article th:each="shoppingList : ${shoppingLists}">
 
+		<div th:unless="${shoppingList.id == editId}">
+			<h2 th:text="${shoppingList.name}">List Name</h2>
+			<a th:href="@{/?editId={id}(id=${shoppingList.id})}">
+				<span class="material-icons" style="vertical-align: middle;">edit</span>
+			</a>
+
+			<form action="deleteList" method="post">
+				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+				<button type="submit">
+					<span class="material-icons" style="vertical-align: middle;">delete</span>
+				</button>
+				
+			</form>
+		</div>
+
+
+		<div th:if="${shoppingList.id == editId}">
+			<form action="changeListName" method="post">
+				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+				<input type="text" name="newListName" placeholder="Name der Liste" th:value="${shoppingList.name}"
+					required />
+				<button type="submit">
+					<span class="material-icons" style="vertical-align: middle;">save</span>
+				</button>
+			</form>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Priorität</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${shoppingList.items}">
+					<div th:if="${item.id != editId}">
+						<td th:text="${item.name}">Item Name</td>
+						<td th:text="${item.priority}">Priority</td>
+						<td>
+							<a th:href="@{/?editId={id}(id=${item.id})}">
+								<span class="material-icons" style="vertical-align: middle;">edit</span>
+							</a>
+						</td>
+						<td>
+							<form action="deleteItem" method="post">
+								<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+								<input type="hidden" name="itemId" th:value="${item.id}" />
+
+								<button type="submit">
+									<span class="material-icons" style="vertical-align: middle;">delete</span>
+								</button>
+							</form>
+						</td>
+					</div>
+
+					<div th:if="${item.id == editId}">
+						<form action="editItem" method="post">
+							<td>
+								<input type="text" name="newItemName" placeholder="Artikelname" th:value="${item.name}"
+									required>
+							</td>
+							<td>
+								<select name="newPriority" required>
+									<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}"
+										th:selected="${p == item.priority}" />
+								</select>
+							</td>
+							<td>
+								<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+								<input type="hidden" name="itemId" th:value="${item.id}" />
+
+								<button type="submit">
+									<span class="material-icons" style="vertical-align: middle;">save</span>
+								</button>
+							</td>
+						</form>
+					</div>
+				</tr>
+
+				<tr>
+					<form action="addItem" method="post">
+						<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+
+						<td>
+							<input type="text" name="itemName" placeholder="Artikelname" required>
+						</td>
+						<td>
+							<select name="priority" required>
+								<option value="" disabled selected>Priority</option>
+								<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}" />
+							</select>
+						</td>
+						<td>
+							<button type="submit">
+								+
+							</button>
+						</td>
+					</form>
+				</tr>
+			</tbody>
+		</table>
+
+		<hr />
+	</article>
+
+	<form action="addList" method="post">
+		<input type="text" name="listName" placeholder="List Name" required>
+		<button type="submit">+</button>
+	</form>
 </body>
+
 </html>
