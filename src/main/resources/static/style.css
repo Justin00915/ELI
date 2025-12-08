@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 20px;
+    background: #f7f8fa;
+    color: #333;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.list-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.list-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.list-header a,
+.item-actions a {
+    text-decoration: none;
+    color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: auto;        
+    min-width: 320px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px 8px;
+}
+
+th {
+    background: #f4f5f7;
+    text-align: left;
+    font-weight: 500;
+}
+
+td input[type="text"],
+td input[type="number"],
+td select {
+    width: 100%;
+    padding: 6px 8px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border 0.2s ease, background 0.2s ease;
+}
+
+td input[type="text"]:focus,
+td input[type="number"]:focus,
+td select:focus {
+    outline: none;
+    border-color: #4caf50;
+    background: #fff;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.add-list-form {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+}
+
+.add-list-form input {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border 0.2s ease, background 0.2s ease;
+}
+
+.add-list-form input:focus {
+    outline: none;
+    border-color: #4caf50;
+    background: #fff;
+}
+
+button,
+.list-header button,
+.item-actions button,
+.add-item-row button,
+.add-list-form button {
+    background: #cacaca;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover,
+.list-header button:hover,
+.item-actions button:hover,
+.add-item-row button:hover,
+.add-list-form button:hover {
+    background: #c2c2c5;
+    transform: translateY(-1px);
+}
+
+button.danger,
+.item-actions button.danger {
+    background: #ff4f4f;
+}
+
+button.danger:hover,
+.item-actions button.danger:hover {
+    background: #e04444;
+    transform: translateY(-1px);
+}
+
+button .material-icons,
+.item-actions button .material-icons {
+    font-size: 18px;
+}

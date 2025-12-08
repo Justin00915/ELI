@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>ELI</title>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>ELI</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/style.css}">
 </head>
+
 
 <body style="font-family: Arial, Helvetica, sans-serif;">
 
@@ -12,22 +15,23 @@
 
 	<article th:each="shoppingList : ${shoppingLists}">
 
-		<div th:unless="${shoppingList.id == editId}">
-			<h2 th:text="${shoppingList.name}">List Name</h2>
+		<div th:unless="${shoppingList.id == editId}" class="list-header">
+			<h2 th:text="${shoppingList.name}"></h2>
+
 			<button>
 				<a th:href="@{/?editId={id}(id=${shoppingList.id})}"> <span
-					class="material-icons" style="vertical-align: middle;">edit</span>
+					class="material-icons">edit</span>
 				</a>
 			</button>
 
 			<form action="deleteList" method="post">
 				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
-				<button type="submit">
-					<span class="material-icons" style="vertical-align: middle;">delete</span>
+				<button class="danger" type="submit">
+					<span class="material-icons">delete</span>
 				</button>
-
 			</form>
 		</div>
+
 
 
 		<div th:if="${shoppingList.id == editId}">
@@ -72,7 +76,7 @@
 								<input type="hidden" name="listId" th:value="${shoppingList.id}" />
 								<input type="hidden" name="itemId" th:value="${item.id}" />
 
-								<button type="submit">
+								<button class="danger" type="submit">
 									<span class="material-icons" style="vertical-align: middle;">delete</span>
 								</button>
 							</form>
@@ -122,6 +126,7 @@
 						<td><select name="unit" required>
 								<option th:each="u : ${units}" th:value="${u}" th:text="${u}" />
 						</select></td>
+						<td></td>
 						<td>
 							<button type="submit">+</button>
 						</td>
