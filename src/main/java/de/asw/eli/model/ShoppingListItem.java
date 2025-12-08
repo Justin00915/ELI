@@ -7,15 +7,19 @@ public class ShoppingListItem {
 	public String id;
 	public String name;
 	public Priority priority;
+	public double amount;
+	public Unit unit;
 
 	public ShoppingListItem() {
 	}
 
-	public ShoppingListItem(String name, Priority priority) {
+	public ShoppingListItem(String name, Priority priority, double amount, Unit unit) {
+		this.id = UUID.randomUUID().toString();
+
 		this.name = name;
 		this.priority = priority;
-
-		this.id = UUID.randomUUID().toString();
+		this.amount = amount;
+		this.unit = unit;
 	}
 
 	// Get & Set
@@ -41,5 +45,21 @@ public class ShoppingListItem {
 
 	public void setPriority(Priority priority) {
 		this.priority = priority;
+	}
+	
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 }

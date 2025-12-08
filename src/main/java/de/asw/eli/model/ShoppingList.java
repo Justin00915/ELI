@@ -15,9 +15,9 @@ public class ShoppingList {
 	}
 
 	public ShoppingList(String name) {
-		this.name = name;
-		
 		this.id = UUID.randomUUID().toString();
+		
+		this.name = name;
 	}
 
 	// Utility

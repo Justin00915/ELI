@@ -1,7 +1,7 @@
 package de.asw.eli.model;
 
 public enum Priority {
-    LOW,
-    MEDIUM,
-    HIGH
+	unwichtig,
+	wichtig,
+	dringlich
 }
