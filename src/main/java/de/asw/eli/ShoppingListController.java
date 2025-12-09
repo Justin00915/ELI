@@ -14,11 +14,49 @@ import de.asw.eli.model.Priority;
 import de.asw.eli.model.ShoppingList;
 import de.asw.eli.model.ShoppingListItem;
 import de.asw.eli.model.Unit;
+import jakarta.annotation.PostConstruct;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class ShoppingListController {
 
-	private final List<ShoppingList> shoppingLists = new ArrayList<>();
+	private List<ShoppingList> shoppingLists = new ArrayList<>();
+	private ObjectMapper mapper = new ObjectMapper();
+	private String fileName = "shoppingLists.json";
+
+	@PostConstruct
+	public void init() {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Path path = Paths.get(fileName);
+
+			if (!Files.exists(path)) {
+				Files.createFile(path);
+			}
+
+			if (Files.size(path) == 0) {
+				shoppingLists = new ArrayList<>();
+				return;
+			}
+
+			shoppingLists = mapper.readValue(path.toFile(), new TypeReference<List<ShoppingList>>() {
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			shoppingLists = new ArrayList<>();
+		}
+	}
+
+	void saveShoppingLists() {
+		mapper.writeValue(new File("shoppingLists.json"), shoppingLists);
+	}
 
 	@GetMapping("/")
 	public String showShoppingList(@RequestParam(required = false) String editId, Model model) {
@@ -41,6 +79,7 @@ public class ShoppingListController {
 			currentShoppingList.addItem(newItem);
 		}
 
+		saveShoppingLists();
 		return "redirect:/";
 	}
 
@@ -51,9 +90,10 @@ public class ShoppingListController {
 
 		list.removeItem(itemId);
 
+		saveShoppingLists();
 		return "redirect:/";
 	}
-	
+
 	@PostMapping("/editItem")
 	public String editItem(@RequestParam String listId, @RequestParam String itemId, @RequestParam String newItemName,
 			@RequestParam Priority newPriority, @RequestParam double newAmount, @RequestParam Unit newUnit) {
@@ -66,6 +106,7 @@ public class ShoppingListController {
 		item.setAmount(newAmount);
 		item.setUnit(newUnit);
 
+		saveShoppingLists();
 		return "redirect:/";
 	}
 
@@ -75,6 +116,7 @@ public class ShoppingListController {
 
 		shoppingLists.add(newList);
 
+		saveShoppingLists();
 		return "redirect:/";
 	}
 
@@ -82,6 +124,7 @@ public class ShoppingListController {
 	public String deleteList(@RequestParam String listId) {
 		shoppingLists.removeIf(list -> list.getId().equals(listId));
 
+		saveShoppingLists();
 		return "redirect:/";
 	}
 
@@ -91,6 +134,7 @@ public class ShoppingListController {
 
 		list.setName(newListName);
 
+		saveShoppingLists();
 		return "redirect:/";
 	}
 }
