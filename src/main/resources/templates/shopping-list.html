@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>ELI</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link rel="stylesheet" th:href="@{/style.css}">
+	<title>ELI</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 
 
@@ -18,11 +17,11 @@
 		<div th:unless="${shoppingList.id == editId}" class="list-header">
 			<h2 th:text="${shoppingList.name}"></h2>
 
-			<button>
-				<a th:href="@{/?editId={id}(id=${shoppingList.id})}"> <span
-					class="material-icons">edit</span>
-				</a>
-			</button>
+			<a th:href="@{/?editId={id}(id=${shoppingList.id})}">
+				<button>
+					<span class="material-icons">edit</span>
+				</button>
+			</a>
 
 			<form action="deleteList" method="post">
 				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
@@ -37,8 +36,8 @@
 		<div th:if="${shoppingList.id == editId}">
 			<form action="changeListName" method="post">
 				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
-				<input type="text" name="newListName" placeholder="Name der Liste"
-					th:value="${shoppingList.name}" required />
+				<input type="text" name="newListName" placeholder="Name der Liste" th:value="${shoppingList.name}"
+					required />
 				<button type="submit">
 					<span class="material-icons" style="vertical-align: middle;">save</span>
 				</button>
@@ -49,9 +48,9 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Priorität</th>
 					<th>Menge</th>
 					<th>Einheit</th>
+					<th>Priorität</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -60,15 +59,15 @@
 				<tr th:each="item : ${shoppingList.items}">
 					<div th:if="${item.id != editId}">
 						<td th:text="${item.name}">Name</td>
-						<td th:text="${item.priority}">Priorität</td>
 						<td th:text="${item.amount}">Menge</td>
 						<td th:text="${item.unit}">Einheit</td>
+						<td th:text="${item.priority}">Priorität</td>
 						<td>
-							<button>
-								<a th:href="@{/?editId={id}(id=${item.id})}"> <span
-									class="material-icons" style="vertical-align: middle;">edit</span>
-								</a>
-							</button>
+							<a th:href="@{/?editId={id}(id=${item.id})}">
+								<button>
+									<span class="material-icons" style="vertical-align: middle;">edit</span>
+								</button>
+							</a>
 
 						</td>
 						<td>
@@ -88,19 +87,19 @@
 							<input type="hidden" name="listId" th:value="${shoppingList.id}" />
 							<input type="hidden" name="itemId" th:value="${item.id}" />
 
-							<td><input type="text" name="newItemName"
-								placeholder="Artikelname" th:value="${item.name}" required>
+							<td><input type="text" name="newItemName" placeholder="Artikelname" th:value="${item.name}"
+									required>
 							</td>
-							<td><select name="newPriority" required>
-									<option th:each="p : ${priorities}" th:value="${p}"
-										th:text="${p}" th:selected="${p == item.priority}" />
-							</select></td>
-							<td><input type="number" name="newAmount"
-								placeholder="Menge" th:value="${item.amount}" required></td>
+							<td><input type="number" name="newAmount" placeholder="Menge" th:value="${item.amount}"
+									required></td>
 							<td><select name="newUnit" required>
 									<option th:each="u : ${units}" th:value="${u}" th:text="${u}"
 										th:selected="${u == item.unit}" />
-							</select></td>
+								</select></td>
+							<td><select name="newPriority" required>
+									<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}"
+										th:selected="${p == item.priority}" />
+								</select></td>
 							<td>
 
 								<button type="submit">
@@ -115,20 +114,19 @@
 					<form action="addItem" method="post">
 						<input type="hidden" name="listId" th:value="${shoppingList.id}" />
 
-						<td><input type="text" name="itemName"
-							placeholder="Artikelname" required></td>
-						<td><select name="priority" required>
-								<option th:each="p : ${priorities}" th:value="${p}"
-									th:text="${p}" />
-						</select></td>
-						<td><input type="number" name="amount" placeholder="Menge"
-							required></td>
+						<td><input type="text" name="itemName" placeholder="Artikelname" required></td>
+						<td><input type="number" name="amount" placeholder="Menge" required></td>
 						<td><select name="unit" required>
 								<option th:each="u : ${units}" th:value="${u}" th:text="${u}" />
-						</select></td>
+							</select></td>
+						<td><select name="priority" required>
+								<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}" />
+							</select></td>
 						<td></td>
 						<td>
-							<button type="submit">+</button>
+							<button type="submit">
+								<span class="material-icons" style="vertical-align: middle;">add</span>
+							</button>
 						</td>
 					</form>
 				</tr>
@@ -140,7 +138,9 @@
 
 	<form action="addList" method="post">
 		<input type="text" name="listName" placeholder="List Name" required>
-		<button type="submit">+</button>
+		<button type="submit">
+			<span class="material-icons" style="vertical-align: middle;">add</span>
+		</button>
 	</form>
 </body>
 

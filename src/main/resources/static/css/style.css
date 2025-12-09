@@ -100,7 +100,7 @@ button,
 .item-actions button,
 .add-item-row button,
 .add-list-form button {
-    background: #cacaca;
+    background: #959ee1;
     color: white;
     border: none;
     padding: 8px 14px;
@@ -118,7 +118,7 @@ button:hover,
 .item-actions button:hover,
 .add-item-row button:hover,
 .add-list-form button:hover {
-    background: #c2c2c5;
+    background: #6f6fe7;
     transform: translateY(-1px);
 }
 
@@ -136,4 +136,8 @@ button.danger:hover,
 button .material-icons,
 .item-actions button .material-icons {
     font-size: 18px;
+}
+
+a{
+	color: white;
 }
