@@ -1,64 +1,97 @@
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 20px;
-	background: #f7f8fa;
-	color: #333;
+	background: #f8fbff;
+	color: #232a30;
 }
 
 h1 {
-	margin-bottom: 30px;
-	font-weight: 600;
+	margin-bottom: 32px;
+	font-weight: 700;
+	color: #000000;
+	letter-spacing: 0.5px;
+	text-shadow: 0 1px 0 #fff, 0 1px 5px #e6ebfa;
+	background: #ffffff;
+	border-radius: 999px;
+	text-align: -webkit-center;
+
 }
+
 
 .list-header {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	margin-bottom: 12px;
+	margin-bottom: 14px;
 }
 
 .list-header h2 {
 	margin: 0;
-	font-size: 20px;
+	font-size: 30px;
+	color: #4772b5;
+	background: #ffffff;
+	border-radius: 9px;
+	padding: 5px 10px;
+	text-decoration: underline;
 }
 
 .list-header a,
 .item-actions a {
 	text-decoration: none;
-	color: inherit;
+	color: #4772b5;
 }
 
 table {
-	border-collapse: collapse;
-	margin-bottom: 20px;
-	margin-top: 10px;
-	width: auto;
+	border-collapse: separate;
+	border-spacing: 0;
+	margin-bottom: 24px;
+	margin-top: 12px;
 	min-width: 320px;
-	background: #fff;
-	border-radius: 8px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+	background: #ffffff;
+	border-radius: 18px;
+	overflow: hidden;
+	box-shadow:
+		0 8px 28px rgba(79, 119, 213, 0.07),
+		0 2px 14px rgba(75, 98, 181, 0.10),
+		0 1px 5px rgba(60, 70, 85, 0.06);
 }
 
 th,
 td {
-	border: 1px solid #ddd;
-	padding: 10px 8px;
+	border: none;
+	padding: 14px 14px;
+	font-size: 16px;
 }
 
 th {
-	background: #f4f5f7;
+	background: #f1f6ff;
 	text-align: left;
-	font-weight: 500;
+	font-weight: 600;
+	color: #3c5fa4;
+}
+
+tr:last-child td {
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+tr:first-child th:first-child {
+	border-top-left-radius: 16px;
+}
+
+tr:first-child th:last-child {
+	border-top-right-radius: 16px;
 }
 
 input[type="text"],
 input[type="number"],
 select {
-	padding: 6px 8px;
+	padding: 7px 9px;
 	box-sizing: border-box;
-	border-radius: 6px;
-	border: 1px solid #ccc;
-	transition: border 0.2s ease, background 0.2s ease;
+	border-radius: 7px;
+	border: 1px solid #dae8fa;
+	background: #f9fbfe;
+	transition: border 0.2s, background 0.2s;
 }
 
 td input[type="text"],
@@ -71,7 +104,7 @@ td input[type="text"]:focus,
 td input[type="number"]:focus,
 td select:focus {
 	outline: none;
-	border-color: #4caf50;
+	border-color: #4772b5;
 	background: #fff;
 }
 
@@ -89,15 +122,16 @@ td select:focus {
 
 .add-list-form input {
 	flex-grow: 1;
-	padding: 8px 10px;
-	border-radius: 8px;
-	border: 1px solid #ccc;
-	transition: border 0.2s ease, background 0.2s ease;
+	padding: 9px 12px;
+	border-radius: 10px;
+	border: 1.5px solid #dae8fa;
+	transition: border 0.2s, background 0.2s;
+	background: #f9fbfe;
 }
 
 .add-list-form input:focus {
 	outline: none;
-	border-color: #4caf50;
+	border-color: #4772b5;
 	background: #fff;
 }
 
@@ -106,16 +140,21 @@ button,
 .item-actions button,
 .add-item-row button,
 .add-list-form button {
-	background: rgb(136, 149, 238);
+	background: #4772b5;
 	color: white;
 	border: none;
-	padding: 8px 14px;
-	border-radius: 8px;
+	padding: 9px 17px;
+	border-radius: 9px;
 	cursor: pointer;
 	align-items: center;
-	gap: 6px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-	transition: background 0.2s ease, transform 0.1s ease;
+	gap: 7px;
+	box-shadow:
+		0 4px 16px rgba(81, 104, 187, 0.14),
+		0 2px 7px rgba(39, 66, 128, 0.08);
+	font-size: 16px;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	transition: background 0.18s, transform 0.08s, box-shadow 0.18s;
 }
 
 button:hover,
@@ -123,26 +162,40 @@ button:hover,
 .item-actions button:hover,
 .add-item-row button:hover,
 .add-list-form button:hover {
-	background: rgb(134, 128, 215);
-	transform: translateY(-1px);
+	background: #36568c;
+	transform: translateY(-2px) scale(1.03);
+	box-shadow:
+		0 8px 24px rgba(60, 70, 130, 0.18),
+		0 4px 16px rgba(81, 104, 187, 0.18);
 }
 
 button.danger,
 .item-actions button.danger {
-	background: #ff4f4f;
+	background: #ef5b64;
 }
 
 button.danger:hover,
 .item-actions button.danger:hover {
-	background: #e04444;
-	transform: translateY(-1px);
+	background: #ce2223;
+	transform: translateY(-1px) scale(1.03);
 }
 
 button .material-icons,
 .item-actions button .material-icons {
-	font-size: 18px;
+	font-size: 19px;
 }
 
-a {
-	color: white;
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #e3eaf0;
+	border-radius: 6px;
+}
+
+.list-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

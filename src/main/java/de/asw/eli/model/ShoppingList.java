@@ -10,13 +10,13 @@ public class ShoppingList {
 	public String id;
 	public String name;
 	public List<ShoppingListItem> items = new ArrayList<>();
-	
+
 	public ShoppingList() {
 	}
 
 	public ShoppingList(String name) {
 		this.id = UUID.randomUUID().toString();
-		
+
 		this.name = name;
 	}
 
@@ -26,17 +26,11 @@ public class ShoppingList {
 	}
 
 	public void removeItem(String itemId) {
-		items
-			.removeIf(item -> item.getId()
-			.equals(itemId));
+		items.removeIf(item -> item.getId().equals(itemId));
 	}
-	
-	public ShoppingListItem getItem(String itemId) throws NoSuchElementException {
-		return items
-			.stream()
-			.filter(item -> item.getId().equals(itemId))
-			.findFirst()
-			.orElseGet(null);
+
+	public ShoppingListItem getItem(String itemId) {
+		return items.stream().filter(item -> item.getId().equals(itemId)).findFirst().orElse(null);
 	}
 
 	// Get & Set

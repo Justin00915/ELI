@@ -12,136 +12,138 @@
 
 	<h1>ELI (Einkaufslisten Interface)</h1>
 
-	<article th:each="shoppingList : ${shoppingLists}">
+	<div class="list-container">
+		<article th:each="shoppingList : ${shoppingLists}">
+			<div th:unless="${shoppingList.id == editId}" class="list-header">
+				<h2 th:text="${shoppingList.name}"></h2>
 
-		<div th:unless="${shoppingList.id == editId}" class="list-header">
-			<h2 th:text="${shoppingList.name}"></h2>
+				<a th:href="@{/?editId={id}(id=${shoppingList.id})}">
+					<button>
+						<span class="material-icons">edit</span>
+					</button>
+				</a>
 
-			<a th:href="@{/?editId={id}(id=${shoppingList.id})}">
-				<button>
-					<span class="material-icons">edit</span>
-				</button>
-			</a>
-
-			<form action="deleteList" method="post">
-				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
-				<button class="danger" type="submit">
-					<span class="material-icons">delete</span>
-				</button>
-			</form>
-		</div>
+				<form action="deleteList" method="post">
+					<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+					<button class="danger" type="submit">
+						<span class="material-icons">delete</span>
+					</button>
+				</form>
+			</div>
 
 
 
-		<div th:if="${shoppingList.id == editId}">
-			<form action="changeListName" method="post">
-				<input type="hidden" name="listId" th:value="${shoppingList.id}" />
-				<input type="text" name="newListName" placeholder="Name der Liste" th:value="${shoppingList.name}"
-					required />
-				<button type="submit">
-					<span class="material-icons" style="vertical-align: middle;">save</span>
-				</button>
-			</form>
-		</div>
+			<div th:if="${shoppingList.id == editId}">
+				<form action="changeListName" method="post">
+					<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+					<input type="text" name="newListName" placeholder="Name der Liste" th:value="${shoppingList.name}"
+						required />
+					<button type="submit">
+						<span class="material-icons" style="vertical-align: middle;">save</span>
+					</button>
+				</form>
+			</div>
 
-		<table>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Menge</th>
-					<th>Einheit</th>
-					<th>Priorität</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="item : ${shoppingList.items}">
-					<div th:if="${item.id != editId}">
-						<td th:text="${item.name}">Name</td>
-						<td th:text="${item.amount}">Menge</td>
-						<td th:text="${item.unit}">Einheit</td>
-						<td th:text="${item.priority}">Priorität</td>
-						<td>
-							<a th:href="@{/?editId={id}(id=${item.id})}">
-								<button>
-									<span class="material-icons" style="vertical-align: middle;">edit</span>
-								</button>
-							</a>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Menge</th>
+						<th>Einheit</th>
+						<th>Priorität</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${shoppingList.items}">
+						<div th:if="${item.id != editId}">
+							<td th:text="${item.name}">Name</td>
+							<td th:text="${item.amount}">Menge</td>
+							<td th:text="${item.unit}">Einheit</td>
+							<td th:text="${item.priority}">Priorität</td>
+							<td>
+								<a th:href="@{/?editId={id}(id=${item.id})}">
+									<button>
+										<span class="material-icons" style="vertical-align: middle;">edit</span>
+									</button>
+								</a>
 
-						</td>
-						<td>
-							<form action="deleteItem" method="post">
+							</td>
+							<td>
+								<form action="deleteItem" method="post">
+									<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+									<input type="hidden" name="itemId" th:value="${item.id}" />
+
+									<button class="danger" type="submit">
+										<span class="material-icons" style="vertical-align: middle;">delete</span>
+									</button>
+								</form>
+							</td>
+						</div>
+
+						<div th:if="${item.id == editId}">
+							<form action="editItem" method="post">
 								<input type="hidden" name="listId" th:value="${shoppingList.id}" />
 								<input type="hidden" name="itemId" th:value="${item.id}" />
 
-								<button class="danger" type="submit">
-									<span class="material-icons" style="vertical-align: middle;">delete</span>
-								</button>
+								<td><input type="text" name="newItemName" placeholder="Artikelname"
+										th:value="${item.name}" required>
+								</td>
+								<td><input type="number" name="newAmount" placeholder="Menge" th:value="${item.amount}"
+										required></td>
+								<td><select name="newUnit" required>
+										<option th:each="u : ${units}" th:value="${u}" th:text="${u}"
+											th:selected="${u == item.unit}" />
+									</select></td>
+								<td><select name="newPriority" required>
+										<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}"
+											th:selected="${p == item.priority}" />
+									</select></td>
+								<td>
+
+									<button type="submit">
+										<span class="material-icons" style="vertical-align: middle;">save</span>
+									</button>
+								</td>
 							</form>
-						</td>
-					</div>
+						</div>
+					</tr>
 
-					<div th:if="${item.id == editId}">
-						<form action="editItem" method="post">
+					<tr>
+						<form action="addItem" method="post">
 							<input type="hidden" name="listId" th:value="${shoppingList.id}" />
-							<input type="hidden" name="itemId" th:value="${item.id}" />
 
-							<td><input type="text" name="newItemName" placeholder="Artikelname" th:value="${item.name}"
-									required>
-							</td>
-							<td><input type="number" name="newAmount" placeholder="Menge" th:value="${item.amount}"
-									required></td>
-							<td><select name="newUnit" required>
-									<option th:each="u : ${units}" th:value="${u}" th:text="${u}"
-										th:selected="${u == item.unit}" />
+							<td><input type="text" name="itemName" placeholder="Artikelname" required></td>
+							<td><input type="number" name="amount" placeholder="Menge" required></td>
+							<td><select name="unit" required>
+									<option th:each="u : ${units}" th:value="${u}" th:text="${u}" />
 								</select></td>
-							<td><select name="newPriority" required>
-									<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}"
-										th:selected="${p == item.priority}" />
+							<td><select name="priority" required>
+									<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}" />
 								</select></td>
+							<td></td>
 							<td>
-
 								<button type="submit">
-									<span class="material-icons" style="vertical-align: middle;">save</span>
+									<span class="material-icons" style="vertical-align: middle;">add</span>
 								</button>
 							</td>
 						</form>
-					</div>
-				</tr>
+					</tr>
+				</tbody>
+			</table>
 
-				<tr>
-					<form action="addItem" method="post">
-						<input type="hidden" name="listId" th:value="${shoppingList.id}" />
+			<hr />
+		</article>
 
-						<td><input type="text" name="itemName" placeholder="Artikelname" required></td>
-						<td><input type="number" name="amount" placeholder="Menge" required></td>
-						<td><select name="unit" required>
-								<option th:each="u : ${units}" th:value="${u}" th:text="${u}" />
-							</select></td>
-						<td><select name="priority" required>
-								<option th:each="p : ${priorities}" th:value="${p}" th:text="${p}" />
-							</select></td>
-						<td></td>
-						<td>
-							<button type="submit">
-								<span class="material-icons" style="vertical-align: middle;">add</span>
-							</button>
-						</td>
-					</form>
-				</tr>
-			</tbody>
-		</table>
+		<form action="addList" method="post">
+			<input type="text" name="listName" placeholder="List Name" required>
+			<button type="submit">
+				<span class="material-icons" style="vertical-align: middle;">add</span>
+			</button>
+		</form>
+	</div>
 
-		<hr />
-	</article>
-
-	<form action="addList" method="post">
-		<input type="text" name="listName" placeholder="List Name" required>
-		<button type="submit">
-			<span class="material-icons" style="vertical-align: middle;">add</span>
-		</button>
-	</form>
 </body>
 
 </html>

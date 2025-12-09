@@ -7,10 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EliApplication {
 
 	public static void main(String[] args) {
-		
-		//Daten auslesen
-		//Daten in den controller schreiben
-		
 		SpringApplication.run(EliApplication.class, args);
 	}
 

@@ -77,9 +77,9 @@ public class ShoppingListController {
 
 		if (currentShoppingList != null) {
 			currentShoppingList.addItem(newItem);
+			saveShoppingLists();
 		}
 
-		saveShoppingLists();
 		return "redirect:/";
 	}
 
@@ -88,9 +88,10 @@ public class ShoppingListController {
 		var list = shoppingLists.stream().filter(shoppingList -> shoppingList.getId().equals(listId)).findFirst()
 				.orElse(null);
 
-		list.removeItem(itemId);
-
-		saveShoppingLists();
+		if (list != null) {
+			list.removeItem(itemId);
+			saveShoppingLists();
+		}
 		return "redirect:/";
 	}
 
@@ -99,14 +100,18 @@ public class ShoppingListController {
 			@RequestParam Priority newPriority, @RequestParam double newAmount, @RequestParam Unit newUnit) {
 		var list = shoppingLists.stream().filter(l -> l.getId().equals(listId)).findFirst().orElse(null);
 
-		var item = list.getItem(itemId);
+		if (list != null) {
+			var item = list.getItem(itemId);
 
-		item.setName(newItemName);
-		item.setPriority(newPriority);
-		item.setAmount(newAmount);
-		item.setUnit(newUnit);
+			if (item != null) {
+				item.setName(newItemName);
+				item.setPriority(newPriority);
+				item.setAmount(newAmount);
+				item.setUnit(newUnit);
+			}
 
-		saveShoppingLists();
+			saveShoppingLists();
+		}
 		return "redirect:/";
 	}
 
@@ -132,7 +137,9 @@ public class ShoppingListController {
 	public String changeListName(@RequestParam String newListName, @RequestParam String listId) {
 		var list = shoppingLists.stream().filter(l -> l.getId().equals(listId)).findFirst().orElse(null);
 
-		list.setName(newListName);
+		if (list != null) {
+			list.setName(newListName);
+		}
 
 		saveShoppingLists();
 		return "redirect:/";
